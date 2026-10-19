@@ -3,14 +3,14 @@ class IosScreencast < Formula
   homepage "https://github.com/hakanor/ios-screencast"
   version "0.1.0"
   url "https://github.com/hakanor/ios-screencast/releases/download/v#{version}/ios-screencast-v#{version}-macos.tar.gz"
-  sha256 "REPLACE_WITH_SHA256"
+  sha256 "7dce641a8792342f3339054c95da9acc0db19081f05502eb7412a3d80d9ca38e"
   license "MIT"
 
   depends_on :macos
 
   resource "ios-device-frames" do
     url "https://github.com/hakanor/ios-device-frames/releases/download/v0.1.0/ios-device-frames-v0.1.0-macos.tar.gz"
-    sha256 "REPLACE_WITH_SHA256"
+    sha256 "3b3ef4971c282fb1f52873de71fcdf990dd06eb6456df8faa623a04bee2ea227"
   end
 
   def install
