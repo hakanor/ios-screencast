@@ -1,0 +1,36 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build (macOS universal)
+        run: |
+          GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w -X main.version=${GITHUB_REF_NAME#v}" -o ios-screencast-arm64 .
+          GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w -X main.version=${GITHUB_REF_NAME#v}" -o ios-screencast-amd64 .
+          lipo -create -output ios-screencast ios-screencast-arm64 ios-screencast-amd64
+          tar -czf "ios-screencast-${GITHUB_REF_NAME}-macos.tar.gz" ios-screencast
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          FILE="ios-screencast-${GITHUB_REF_NAME}-macos.tar.gz"
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" --clobber "${FILE}"
+          else
+            gh release create "${GITHUB_REF_NAME}" --generate-notes "${FILE}"
+          fi
