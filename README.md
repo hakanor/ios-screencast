@@ -8,7 +8,7 @@ ReplayKit gives smooth 60 fps video but hides some system prompts, such as the l
 permission alert. ios-screencast streams ReplayKit and switches to XCTest screenshots while
 such an alert is on screen, then back, at keyframes, so the result is one continuous video.
 
-![ios-screencast viewer](docs/images/viewer.png)
+![ios-screencast viewer](docs/images/viewer.webp)
 
 ## Install
 
