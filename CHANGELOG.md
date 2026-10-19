@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- The runner now notices when the broadcast has started, so it returns to the home screen and no longer reports a failure and tries again.
+- A broadcast that started counts as started even if the runner reports otherwise.
+- The broadcast stream reconnects while the screen is still: the extension greets new connections instead of waiting for the next frame.
+
 ## 0.1.0
 
 First release.

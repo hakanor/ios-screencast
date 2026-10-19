@@ -210,6 +210,10 @@ func (s *session) runnerEvent(e streamEvent) {
 }
 
 func (s *session) onBroadcastResult(result broadcastResult) {
+	// The broadcast stream is the ground truth; the runner may not have noticed in time.
+	if !result.started && s.mixer.currentStatus().Broadcast {
+		result = broadcastResult{started: true, reason: "Broadcast started."}
+	}
 	s.mu.Lock()
 	s.broadcastPending = false
 	retry := !result.started && s.broadcastAttempts < s.options.broadcastAttempts
